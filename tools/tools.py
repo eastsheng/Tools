@@ -71,7 +71,59 @@ def velocity_a(filename1,filename2,Atom_ID=False):
 
 #Tool 3
 
+def eigen_vector(filename1,filename2,filename3,number_atom=576):
+	''' write MoS2-MoSe2 data file for ovito, eigen_vector(
+	eigenvectorfile from GULP, primitive cell file, data for ovitio, 
+	atom number of primitive cell)'''
+	print('Waiting......!')
 
+	with open(filename2)as position, \
+	open(filename1)as eigenvector, \
+	open(filename3,'w')as for_eigenvector:
+		for_eigenvector.write('         ')
+		for_eigenvector.write(str(number_atom))
+		for_eigenvector.write('\n')
+		for_eigenvector.write(' Mo S Se\n')
+		# print(position.read())
+		for index, line in enumerate(position,1):
+			line_position = line.strip().split()
+			len_line = len(line_position)
+			# print(len_line)
+			if len_line==12:
+				# print(line_position)
+				# for_eigenvector.write(line_position[0])
+				for_eigenvector.write('         ')
+				if line_position[2]=='1':
+					for_eigenvector.write('S')
+					for_eigenvector.write('      ')
+				elif line_position[2]=='2':
+					for_eigenvector.write('Mo')
+					for_eigenvector.write('      ')
+				elif line_position[2]=='3':
+					for_eigenvector.write('Se')
+					for_eigenvector.write('      ')
+				for_eigenvector.write(line_position[4])
+				for_eigenvector.write('       ')
+				for_eigenvector.write(line_position[5])
+				for_eigenvector.write('       ')
+				for_eigenvector.write(line_position[6])
+				for_eigenvector.write('       \n')
+				
+		for index, line in enumerate(eigenvector,1):
+			if index<=number_atom:
+				line_eigenvector = line.strip().split()
+				for_eigenvector.write(line_eigenvector[1])
+				for_eigenvector.write('       ')
+				for_eigenvector.write(line_eigenvector[3])
+				for_eigenvector.write('       ')
+				for_eigenvector.write(line_eigenvector[5])
+				for_eigenvector.write('\n')
+			elif number_atom<index<=2*number_atom:
+				break
+	return  print('eigen_vector() Done!')
+# eigen_vector('eigenvector_4_MoS2','Mos2_4primitivecells.data','eigenvector_4.143906THz_4_MoS2_33_3x8.dat')
+
+#Tool 4
 
 
 
