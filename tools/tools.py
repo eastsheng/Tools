@@ -42,7 +42,7 @@ def writedata_a(filename1,filename2):
 
 #Tool 2
 
-'''only have velocity of x, y and z direction in the velocity file, \
+'''velocity of x, y and z direction in the velocity file,
 may include atomic id.'''
 def velocity_a(filename1,filename2,Atom_ID=False):
 	"""Processing atomic velocity files output by lammps,
