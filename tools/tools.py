@@ -125,5 +125,39 @@ def eigen_vector(filename1,filename2,filename3,number_atom=576):
 
 #Tool 4
 
+def Write_position_for_gulp(datafromlammps,dataforgulp):
+	'''write position infomation from lammps data file 
+	for gulp inputfile'''
+	with open(datafromlammps) as min1,open(dataforgulp,'w') as min2:
+		for index, line in enumerate(min1,1):
 
+			# print(line)
+			min_1 = line.strip().split()
+			length_line = len(min_1)
+			# print(length_line)
+			if length_line==12:
+				print(min_1)
+				# min2.write(min_1[0])
+				# min2.write('   ')
+				if min_1[2] == str(1):
+
+					min2.write('S')
+				elif min_1[2]  == str(3):
+					min2.write('Se')
+				else:
+					min2.write('Mo')
+				min2.write('   ')
+				min2.write('core')					
+				min2.write('   ')
+				min2.write(min_1[4])
+				min2.write('   ')				
+				min2.write(min_1[5])
+				min2.write('   ')
+				min2.write(min_1[6])
+				min2.write('   ')
+				min2.write('0.0   1.0   0.0   1 1 1')
+				min2.write('   #')					
+				min2.write(min_1[0])
+				min2.write('\n')
+	return print('Write_position_for_gulp() done!')
 
