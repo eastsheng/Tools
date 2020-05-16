@@ -33,8 +33,8 @@ def write_dataforTransmission(filename1,filename2,number_atom_type=2):
 		# print(data)
 		for index,line in enumerate(former,1):
 			line_ss = line.strip().split()
-			if index<=25:
-				latter.write(line)			
+			if index<=26:
+				latter.write(line)	
 			# print(line)
 			size_line = len(line_ss)
 			# print(size_line)
@@ -47,44 +47,44 @@ def write_dataforTransmission(filename1,filename2,number_atom_type=2):
 					#If it larger than half of xhi, 
 					#judge the line[2](type of atom) whether == 1, is S atom
 					if number_atom_type==3:
-						if line[2]=='1':
+						if line_ss[2]=='1':
 							# print('S')
-							latter.write('      '+line_ss[0]+'      '+line_ss[1]+'      '\
-								+str(4)+    '   '+line_ss[3]+'   '   +line_ss[4]+'   '+line_ss[5]+'   '\
-								+line_ss[6]+'   '+line_ss[7]+'   '   +line_ss[8]+'   '+line_ss[9]+'   '\
-								+line_ss[10]+line_ss[11])
+							latter.write('   '+line_ss[0]+'   '+line_ss[1]+'   '\
+								+str(4)+    '  '+line_ss[3]+'   '   +line_ss[4]+'     '+line_ss[5]+'     '\
+								+line_ss[6]+'   '+line_ss[7]+'   '   +line_ss[8]+'   '+line_ss[9]+' '\
+								+line_ss[10]+' '+line_ss[11])
 							latter.write('\n')	
 						#judge the line[2](type of atom) whether == 2, is Mo atom						
 						elif line_ss[2]=='2':
 							# print('Mo')
-							latter.write('      '+line_ss[0]+'      '+line_ss[1]+'      '\
-								+str(5)+    '   '+line_ss[3]+'   '   +line_ss[4]+'   '+line_ss[5]+'   '\
-								+line_ss[6]+'   '+line_ss[7]+'   '   +line_ss[8]+'   '+line_ss[9]+'   '\
-								+line_ss[10]+line_ss[11])
+							latter.write('   '+line_ss[0]+'   '+line_ss[1]+'   '\
+								+str(5)+    '  '+line_ss[3]+'   '   +line_ss[4]+'     '+line_ss[5]+'     '\
+								+line_ss[6]+'   '+line_ss[7]+'   '   +line_ss[8]+'   '+line_ss[9]+' '\
+								+line_ss[10]+' '+line_ss[11])
 							latter.write('\n')						
 						elif line_ss[2]=='3':
 							# print('Se')
-							latter.write('      '+line_ss[0]+'      '+line_ss[1]+'      '\
-								+str(6)+    '   '+line_ss[3]+'   '   +line_ss[4]+'   '+line_ss[5]+'   '\
-								+line_ss[6]+'   '+line_ss[7]+'   '   +line_ss[8]+'   '+line_ss[9]+'   '\
-								+line_ss[10]+line_ss[11])
+							latter.write('   '+line_ss[0]+'   '+line_ss[1]+'   '\
+								+str(6)+    '  '+line_ss[3]+'   '   +line_ss[4]+'     '+line_ss[5]+'     '\
+								+line_ss[6]+'   '+line_ss[7]+'   '   +line_ss[8]+'   '+line_ss[9]+' '\
+								+line_ss[10]+' '+line_ss[11])
 							latter.write('\n')	
 
 					elif number_atom_type==2:
 						if line_ss[2]=='1':
 							# print('S')
-							latter.write('      '+line_ss[0]+'      '+line_ss[1]+'      '\
-								+str(3)+    '   '+line_ss[3]+'   '   +line_ss[4]+'   '+line_ss[5]+'   '\
-								+line_ss[6]+'   '+line_ss[7]+'   '   +line_ss[8]+'   '+line_ss[9]+'   '\
-								+line_ss[10]+line_ss[11])
+							latter.write('   '+line_ss[0]+'   '+line_ss[1]+'   '\
+								+str(3)+    '  '+line_ss[3]+'   '   +line_ss[4]+'     '+line_ss[5]+'     '\
+								+line_ss[6]+'   '+line_ss[7]+'   '   +line_ss[8]+'   '+line_ss[9]+' '\
+								+line_ss[10]+' '+line_ss[11])
 							latter.write('\n')	
 						#judge the line[2](type of atom) whether == 2, is Mo atom						
 						elif line_ss[2]=='2':
 							# print('Mo')
-							latter.write('      '+line_ss[0]+'      '+line_ss[1]+'      '\
-								+str(4)+    '   '+line_ss[3]+'   '   +line_ss[4]+'   '+line_ss[5]+'   '\
-								+line_ss[6]+'   '+line_ss[7]+'   '   +line_ss[8]+'   '+line_ss[9]+'   '\
-								+line_ss[10]+line_ss[11])
+							latter.write('   '+line_ss[0]+'   '+line_ss[1]+'   '\
+								+str(4)+    '  '+line_ss[3]+'   '   +line_ss[4]+'     '+line_ss[5]+'     '\
+								+line_ss[6]+'   '+line_ss[7]+'   '   +line_ss[8]+'   '+line_ss[9]+' '\
+								+line_ss[10]+' '+line_ss[11])
 							latter.write('\n')	
 	
 	return print('write_dataforTransmission() done!')
@@ -98,10 +98,10 @@ def DeltaT_calculate():
 	return DeltaT,print('DeltaT_calculate() done!')
 
 
-size('30_3x8MoS2_MoSe2.data',200)
+size('4x8MoS2_MoSe2.data',200)
 
-write_dataforTransmission('30_3x8MoS2_MoSe2.data',\
-	'30_3x8MoS2_MoSe2_for_transmission.data',number_atom_type=3)
+write_dataforTransmission('4x8MoS2_MoSe2.data',\
+	'4x8MoS2_MoSe2_for_transmission.data',number_atom_type=3)
 
 print('*******************')
 print('****   Done!   ****')
