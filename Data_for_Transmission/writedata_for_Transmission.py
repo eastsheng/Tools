@@ -98,10 +98,10 @@ def DeltaT_calculate():
 	return DeltaT,print('DeltaT_calculate() done!')
 
 
-size('4x8MoS2_MoSe2.data',200)
+size('MoS2_Defect25.data',200)
 
-write_dataforTransmission('4x8MoS2_MoSe2.data',\
-	'4x8MoS2_MoSe2_for_transmission.data',number_atom_type=3)
+write_dataforTransmission('MoS2_Defect25.data',\
+	'MoS2_Defect25_for_transmission.data',number_atom_type=3)
 
 print('*******************')
 print('****   Done!   ****')
