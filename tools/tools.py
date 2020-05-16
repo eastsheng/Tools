@@ -14,34 +14,14 @@ def writedata_a(filename1,filename2):
 				length_line = len(min_1)
 				# print(length_line)
 				if length_line==12:
-					min2.write('      ')
-					min2.write(min_1[0])
-					min2.write('      ')
-					min2.write(min_1[1])					
-					min2.write('  1  ')
-					min2.write(min_1[3])
-					min2.write('     ')					
-					min2.write(min_1[4])
-					min2.write('     ')				
-					min2.write(min_1[5])
-					min2.write('   ')
-					min2.write(min_1[6])
-					min2.write('   ')
-					min2.write(min_1[7])
-					min2.write('   ')					
-					min2.write(min_1[8])
-					min2.write('   ')					
-					min2.write(min_1[9])
-					min2.write(' ')
-					min2.write(min_1[10])
-					min2.write(' ')
-					min2.write(min_1[11])				
+					min2.write('      '+min_1[0] +'      '+min_1[1]+'  1  '+min_1[3])					
+					min2.write('     ' +min_1[4] +'      '+min_1[5]+'   '  +min_1[6])					
+					min2.write('   '   +min_1[7] +'   '   +min_1[8]+'     '+min_1[9])
+					min2.write(' '     +min_1[10]+' '     +min_1[11])				
 					min2.write('\n')
-
 	return print('\nwritedata_a() done!\n')
 
 #Tool 2
-
 '''velocity of x, y and z direction in the velocity file,
 may include atomic id.'''
 def velocity_a(filename1,filename2,Atom_ID=False):
@@ -102,12 +82,9 @@ def eigen_vector(filename1,filename2,filename3,number_atom=576):
 				elif line_position[2]=='3':
 					for_eigenvector.write('Se')
 					for_eigenvector.write('      ')
-				for_eigenvector.write(line_position[4])
-				for_eigenvector.write('       ')
-				for_eigenvector.write(line_position[5])
-				for_eigenvector.write('       ')
-				for_eigenvector.write(line_position[6])
-				for_eigenvector.write('       \n')
+				for_eigenvector.write(line_position[4]+'       ')
+				for_eigenvector.write(line_position[5]+'       ')
+				for_eigenvector.write(line_position[6]+'       \n')
 				
 		for index, line in enumerate(eigenvector,1):
 			if index<=number_atom:
@@ -146,18 +123,10 @@ def Write_position_for_gulp(datafromlammps,dataforgulp):
 					min2.write('Se')
 				else:
 					min2.write('Mo')
-				min2.write('   ')
-				min2.write('core')					
-				min2.write('   ')
-				min2.write(min_1[4])
-				min2.write('   ')				
-				min2.write(min_1[5])
-				min2.write('   ')
-				min2.write(min_1[6])
-				min2.write('   ')
-				min2.write('0.0   1.0   0.0   1 1 1')
-				min2.write('   #')					
-				min2.write(min_1[0])
-				min2.write('\n')
+				min2.write('   core   ')
+				min2.write(min_1[4]+'   '+min_1[5]+'   ')				
+				min2.write(min_1[6]+'   ')
+				min2.write('0.0   1.0   0.0   1 1 1   #')				
+				min2.write(min_1[0]+'\n')
 	return print('Write_position_for_gulp() done!')
 
