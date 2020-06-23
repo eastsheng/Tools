@@ -34,7 +34,7 @@ def Area(NPT_data,logfile):
 	return	 print('\n**********Area done!**********\nArea',str(i),'= ',area,'m^2\n')
 
 def Interfacial_resistance(Temp_and_energy_file,logfile,IR_file,\
-	timestep=5e-4,inter_step=100,Figure=True):
+	fit_range1=120,fit_range2=4,timestep=5e-4,inter_step=100,Figure=True):
 	'''Interfacial resistance is calculated by integral change of temperature difference 
 	and recording total energy.
 	Format of each line:
@@ -93,9 +93,9 @@ def Interfacial_resistance(Temp_and_energy_file,logfile,IR_file,\
 	x1 = DT_integrate
 	y1 = total_energy[1:]
 	#******control the fitting interval******#
-	Fit_minx2 = int(len(step)/120)
+	Fit_minx2 = int(len(step)/fit_range1)
 	# print(Fit_minx2)
-	Fit_maxx2 = int(len(step)/4)
+	Fit_maxx2 = int(len(step)/fit_range2)
 	# print(Fit_maxx2)
 	x2 = DT_integrate[Fit_minx2:Fit_maxx2]
 	y2 = total_energy[Fit_minx2:Fit_maxx2]
@@ -130,15 +130,18 @@ def Interfacial_resistance(Temp_and_energy_file,logfile,IR_file,\
 
 
 #**********Main Program**********#
-k = 1
+fit_range1=500
+fit_range2=4
+
+k = 3
 for i in range(1,k+1):
 #Area(nptfile,logfile)
-	Area('GRA_C3N_npt'+str(i)+'.data','log.txt')
+	Area('Bulk_MoS2_npt'+str(i)+'.data','log.txt')
 #Interfacial resistance(temperature and energy file, logfile, result file,
 #timestep,interval of step,whether show figure)
 	Interfacial_resistance('A3relaxation'+str(i)+'.dat',\
 		'log.txt',\
 		'Interfacial_resistance.result',\
-		timestep=5e-4,inter_step=100,Figure=False)
+		fit_range1,fit_range2,timestep=5e-4,inter_step=100,Figure=True)
 
 
