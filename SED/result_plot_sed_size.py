@@ -81,7 +81,7 @@ plt.figure(figsize=(6,10))
 #plot
 plt.pcolormesh(x,y,z,cmap='jet',shading='gouraud')#rainbow  gouraud  
 #norm=colors.LogNorm(vmin = z.min(),vmax = z.max()),
-
+print(len(x),len(y),len(z))
 
 #--------colorbar
 cb=plt.colorbar(shrink=0.8)#,fraction=.1)
