@@ -4,6 +4,7 @@ import seaborn as sns
 from matplotlib.font_manager import FontProperties
 
 def Angle(n,m):
+	Number_data=open('NumberAtom.data','a')
 	if m==0 and n==0:
 		print("\n跳过m和n同时为0的情况,并设其角度为0\n")
 		angle = 0.000
@@ -12,7 +13,7 @@ def Angle(n,m):
 
 		angle = np.arccos(x)*(180/np.pi)
 		angle = round(angle,3)
-		print(angle)
+	print('Angle=',angle,file=Number_data)
 	return angle
 
 #Angle(5,1)
@@ -20,7 +21,7 @@ def Angle(n,m):
 def Number_of_Aotm(n,m):
 	Number_data=open('NumberAtom.data','a')
 	NOA = 32*(m**2+m*n+n**2)
-	print('(n,m) =','('+str(n)+','+str(m)+')',\
+	print('  (n,m) =','('+str(n)+','+str(m)+')',\
 		'原子总数',NOA,'\n',file=Number_data)
 
 	return print('\n扭转后异质结晶胞：\n',\
