@@ -2,31 +2,32 @@ import numpy as np
 import matplotlib.pyplot as plt 
 import seaborn as sns
 
+Number_data = open('result.txt','a')
+Number_data.write('Angle      '+'(n,m)      '+'Number of Aotm\n')
+
 def Angle(n,m):
-	Number_data=open('result.data','a')
+	# Number_data=open('result.txt','a')
 	if m==0 and n==0:
-		print("\n跳过m和n同时为0的情况,并设其角度为0\n")
+		print("\n注意：“跳过m和n同时为0的情况,并设其角度为0”\n")
 		angle = 0.000
 	else:
 		x = (m**2+4*m*n+n**2)/(m**2+m*n+n**2)/2
 
 		angle = np.arccos(x)*(180/np.pi)
 		angle = round(angle,3)
-	print('Angle=',angle,file=Number_data)
+	# print('Angle='+str(angle),file=Number_data)
+	Number_data.write(str(angle)+'      ')
 	return angle
 
 #Angle(5,1)
 
 def Number_of_Aotm(n,m):
-	Number_data=open('result.data','a')
+	# Number_data=open('result.txt','a')
 	NOA = 32*(m**2+m*n+n**2)
-	print('  (n,m) =','('+str(n)+','+str(m)+')',\
-		'原子总数',NOA,'\n',file=Number_data)
-
+	# print('  (n,m) =','('+str(n)+','+str(m)+')',\
+	# 	NOA,'\n',file=Number_data)
+	Number_data.write('('+str(n)+','+str(m)+')'+'     '+str(NOA)+'\n')
 	return NOA
-	# print('\n扭转后异质结晶胞：\n',\
-	# 	'(n,m) =','('+str(n)+','+str(m)+')',\
-	# 	'原子总数',NOA,'\n')
 
 #Number_of_Aotm(5,1)
 
@@ -45,7 +46,7 @@ def Heatmap(n_max,m_max,figure=True):
 	# print(atomnumber_matrix)
 
 	plt.figure(figsize=(24,8))
-	plt.rc('font',family='Times New Roman',size=12)
+	plt.rc('font',family='Times New Roman',size=16)
 	# sns.set()	
 
 	plt.subplot(121)
@@ -70,9 +71,11 @@ def Heatmap(n_max,m_max,figure=True):
 	if figure==True:
 		plt.show()
 		plt.close()
-	return
+	return print('Heatmap() Done!')
 
 '''
 Heatmap(n_max,m_max,figure=True)
 '''
-Heatmap(10,10,figure=True)
+Heatmap(10,10,figure=False)
+
+Number_data.close()
