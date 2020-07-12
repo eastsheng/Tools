@@ -4,7 +4,7 @@ import numpy as np
 np.set_printoptions(suppress=True)
 np.set_printoptions(threshold=100000000)
 
-def eigen_vector(filename1,filename2,filename3,number_atom=576):
+def eigen_vector(filename1,filename2,filename3,frefactor,number_atom=576):
 	print('Waiting......!')
 
 	with open(filename2)as position, \
@@ -33,9 +33,9 @@ def eigen_vector(filename1,filename2,filename3,number_atom=576):
 
 		eigenvector_info = []
 		for index, line in enumerate(eigenvector,1):
-			if index>25*number_atom and index<=26*number_atom:
+			if index>frefactor*number_atom and index<=(frefactor+1)*number_atom:
 				line_eigenvector = line.strip().split()
-				# print(line_eigenvector[0])
+				print(line_eigenvector[0])
 				eigenvector_info.append(line_eigenvector[1])
 				eigenvector_info.append(line_eigenvector[3])
 				eigenvector_info.append(line_eigenvector[5])
@@ -54,7 +54,7 @@ def eigen_vector(filename1,filename2,filename3,number_atom=576):
 	return print(position_array.shape),print(eigenvector_array.shape),print(eigenvector_ovito.shape)
 
 eigen_vector('eigenvector_4.1_4.5THz_MoS2-MoSe2','25_4x8_nanodot2period.data',\
-	'eigenvector_4.454415THz_MoS2-MoSe2_25_4x8.dat',number_atom=384)
+	'eigenvector_4.454415THz_MoS2-MoSe2_25_4x8.dat',frefactor=17,number_atom=384)
 print('Done!')
 
 
