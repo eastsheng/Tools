@@ -21,10 +21,10 @@ def LammpsToGulp(epsilon,sigma,a,Lambda,gamma,costheta0,A_LAMMPS,B_LAMMPS,p,q,to
 	rho2_SW3 = round(rho_SW2*gamma,4)
 
 	rmin12 = 0.00
-	rmax12 = round(a*sigma,4)
+	rmax12 = round(a*rho2_SW3,4)
 
 	rmin13 = 0.00
-	rmax13 = round(a*sigma,4)
+	rmax13 = round(a*rho2_SW3,4)
 
 	rmin23 = 0.00
 	rmax23 =  round(a*rho2_SW3,4)##rmax23怎么获取?
