@@ -19,7 +19,7 @@ class Dispersion(object):
 			print('\n每一行元素数：',row_number,'个数据，其中前三个是基矢\n')#可能多了一列，在第四列全是0.删掉
 			atom_number = int((row_number-3)/3)
 			print('原子个数：',atom_number)
-
+			# 由于输出的格式不正确，这里是修改格式
 			for i in range(self.k_point):
 				# print(i)
 				for j in range(i*row_number,(i+1)*row_number):
@@ -58,7 +58,7 @@ class Dispersion(object):
 			# print(vector)
 		else:
 			vector = data[:, 0]
-		frequency = data[:, 4:]#由于第四列全是0，而且多出一列，所以从第5列开始
+		frequency = data[:, 4:]#由于多出第一列位移，2 3 4 列是波矢，所以从第5列开始是频率
 		# print(frequency)
 		
 		plt.rc('font', family='Times New Roman', size=16)
