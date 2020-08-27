@@ -89,7 +89,7 @@ class Dispersion(object):
 		plt.ylim(self.r_ymin, self.r_ymax)
 		# 保存
 		plt.savefig(self.figname, dpi=self.figdpi)
-		plt.show()
+		# plt.show()
 		plt.close()
 		return 
 
@@ -98,9 +98,11 @@ class Dispersion(object):
 
 		vector = self.vector.reshape((self.k_point,1))
 
-		plt.rc('font', family='Times New Roman', size=16)
-		fig = plt.figure(figsize=(self.figsx, self.figsy))
-		axs = fig.add_subplot(1,1,1)
+		plt.rc('font', family='Times New Roman', size=20)
+		# fig = plt.figure(figsize=(self.figsx, self.figsy))
+		# axs = fig.add_subplot(1,1,1)
+		fig, ax = plt.subplots(figsize=(self.figsx, self.figsy))
+		fig.subplots_adjust(bottom=0.1,left=0.2)
 
 		for i in range(self.atom_number*3):
 			# print(i)
@@ -110,21 +112,22 @@ class Dispersion(object):
 			points = np.array([vector,frequency]).T.reshape(-1, 1, 2)
 			segments = np.concatenate([points[:-1], points[1:]], axis=1)
 
-			norm = plt.Normalize(self.energymin,self.energymax)#最大最小值
-			# norm = plt.Normalize(0,1200)
+			# norm = plt.Normalize(self.energymin,self.energymax)#最大最小值
+			norm = plt.Normalize(0.0002,0.8)
 
 			lc = LineCollection(segments, cmap='jet', norm=norm)
 			lc.set_array(energy)
 			lc.set_linewidth(self.linewidth)
-			line = axs.add_collection(lc)
+			line = ax.add_collection(lc)
 		fig.colorbar(line)
-
 		# 格式
 		# plt.title('Dipersion', size=26)
-		plt.xlabel('Wave vector',size=22)
-		plt.ylabel('Frequency (THz)',size=22)		
-		plt.xticks(size=22)
-		plt.yticks(size=22)
+		ax.set_xlabel('Wave vector',fontsize=32,fontweight='bold')
+		ax.set_ylabel('Frequency (THz)',fontsize=32)
+		# plt.xlabel('Wave vector',size=32)
+		# plt.ylabel('Frequency (THz)',size=32)		
+		plt.xticks(size=25)
+		plt.yticks(size=25)
 		# 范围
 		plt.xlim(self.r_xmin, self.r_xmax)
 		plt.ylim(self.r_ymin, self.r_ymax)
@@ -144,22 +147,22 @@ figsize_x = 8
 figsize_y = 16
 dpi = 300
 # 线宽默认为1.0
-lw = 2.0
+lw = 4
 # 画图范围，默认x:(0,0.5),y:(0,2)
 range_xmin = 0
 range_xmax = 0.5
 range_ymin = 1
-range_ymax = 2.5
+range_ymax = 2.4
 # 原始需要分类的dipersion文件
-disper_before = 'phonon_sorted.dat'
-disper_before_ener = 'phonon_sorted_energy.dat'
+# disper_before = 'phonon_sorted.dat'
+disper_before_ener = 'phonon_sorted_energy209.dat'
 # 要保存的文件
-disper_after = 'p_sorted'
-disper_after_ener = 'p_sorted_energy'
+# disper_after = 'p_sorted'
+disper_after_ener = 'p_sorted_energy209'
 
 # 保存的图片
-disperfig = 'phonon_disp.tiff'
-disperEnergyfig = 'phonon_dispEnergy.tiff'
+disperfig = 'phonon_disp209.tiff'
+disperEnergyfig = 'phonon_dispEnergy209.tiff'
 
 dispersion = Dispersion()
 dispersion.phonon_sort(k_point, disper_before_ener, disper_after_ener)
