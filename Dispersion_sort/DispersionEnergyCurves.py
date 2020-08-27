@@ -2,7 +2,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.collections import LineCollection
-from matplotlib.colors import ListedColormap, BoundaryNorm
 
 class Dispersion(object):
 	def phonon_sort(self,k_point,filename1,filename2,cm2THz=33.36):
@@ -151,8 +150,8 @@ lw = 4
 # 画图范围，默认x:(0,0.5),y:(0,2)
 range_xmin = 0
 range_xmax = 0.5
-range_ymin = 1
-range_ymax = 2.4
+range_ymin = 0
+range_ymax = 2.0
 # 原始需要分类的dipersion文件
 # disper_before = 'phonon_sorted.dat'
 disper_before_ener = 'phonon_sorted_energy209.dat'
