@@ -4,7 +4,8 @@ import matplotlib.pyplot as plt
 class GroupVelocity(object):
  	"""Read GroupVelocity array"""
  	def ReadVelocity(self,fvelocity_data):
- 		self.data = np.loadtxt(fvelocity_data)
+ 		self.filename = fvelocity_data
+ 		self.data = np.loadtxt(self.filename)
  		self.mkm = 1000
  		print('Size of Array:',self.data.shape)
  		return 
@@ -45,7 +46,12 @@ class GroupVelocity(object):
  		print('Frequency in','['+str(fmin)+','+str(fmax)+']',average_v/self.mkm,'km/s')
  		return 	
 
- 	def PlotGV(self,):
+ 	def TotVelocity(self):
+ 		tot_v = np.sum(self.data[:,1])
+ 		print("\nThe sum of total velocities=",tot_v/self.mkm,"km/s\n")
+ 		return tot_v
+
+ 	def PlotGV(self,Plot=True,Save=True,dpi=300):
  		f = self.data[:,0] #THz
  		v = self.data[:,1]/self.mkm #km/s
 
@@ -60,7 +66,13 @@ class GroupVelocity(object):
  		plt.yticks(size=25)
  		plt.xlim(0,16)
  		plt.ylim(0,)
- 		plt.show()
+ 		if Save==True:
+ 			plt.savefig(self.filename+'.tiff',dpi=dpi) 
+
+ 		if Plot==True:
+ 			plt.show()
+
+ 		plt.close()
  		return
 		
 
@@ -73,5 +85,11 @@ GV.FAverageV(0)
 GV.AllFreAverageV()
 # Average velocity of a given frequency range
 GV.RangeFre(0,2)
+# The sum of all velocities
+GV.TotVelocity()
+
 # Plot
-GV.PlotGV()
+Plot=True
+Save=True
+dpi=60
+GV.PlotGV(Plot,Save,dpi)
