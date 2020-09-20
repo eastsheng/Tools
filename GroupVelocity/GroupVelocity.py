@@ -51,7 +51,7 @@ class GroupVelocity(object):
  		print("\nThe sum of total velocities=",tot_v/self.mkm,"km/s\n")
  		return tot_v
 
- 	def PlotGV(self,Plot=True,Save=True,dpi=300):
+ 	def PlotGV(self,Plot=True,Save=True,dpi=300,fremin=0,fremax=16):
  		f = self.data[:,0] #THz
  		v = self.data[:,1]/self.mkm #km/s
 
@@ -64,7 +64,7 @@ class GroupVelocity(object):
  		ax.set_ylabel('Group velocity (km/s)',fontsize=26,fontweight='bold')
  		plt.xticks(size=25)
  		plt.yticks(size=25)
- 		plt.xlim(0,16)
+ 		plt.xlim(fremin,fremax)
  		plt.ylim(0,)
  		if Save==True:
  			plt.savefig(self.filename+'.tiff',dpi=dpi) 
@@ -92,4 +92,7 @@ GV.TotVelocity()
 Plot=True
 Save=True
 dpi=60
-GV.PlotGV(Plot,Save,dpi)
+# THz
+fremin = 0
+fremax = 16
+GV.PlotGV(Plot,Save,dpi,fremin,fremax)
