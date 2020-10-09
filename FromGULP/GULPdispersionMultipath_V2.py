@@ -3,11 +3,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 class GulpDisp(object):
 	"""Gulp Dispersion"""
-	def Readata(self,disp_data,number_path,number_atom=96):
+	def Readata(self,disp_data,number_atom=96):
 		self.disp_data = disp_data
-		self.number_path = number_path		
-		self.number_atom=number_atom
-		print('There are "'+str(self.number_path)+'" Brillouion paths')
+		self.number_branch=number_atom*3
 		return 
 
 	def Plot(self,xmin,xmax,ymin,ymax,linewidth,dpi=300,save=True):
@@ -16,9 +14,9 @@ class GulpDisp(object):
 		# print(self.data)
 		# print(len(self.data))
 		len_data = len(self.data)
-		line_number = int(len_data/self.number_atom)
+		line_number = int(len_data/self.number_branch)
 		WaveVector = np.linspace(0,1,line_number)
-		Frequency = self.data[:,1].reshape((line_number,self.number_atom))
+		Frequency = self.data[:,1].reshape((line_number,self.number_branch))
 		Frequency = Frequency/33.36 # CM-1 >> THz	
 		# print(Frequency.shape)
 		# Plot
@@ -37,15 +35,13 @@ class GulpDisp(object):
 
 # *************Main Program************* #
 # The number of atoms in the primitive cell
-number_atom = 720
+number_atom = 240
 # plot x y range and line width
 xmin,xmax = [0,1]
 ymin,ymax = [0,2]
 linewidth = 2
-# How many paths?
-number_path  = 2
 
 gulp = GulpDisp()
 # gulp.ReadKpoint('C3NGRAdispersion.disp',number_atom)
-gulp.Readata('20_5x8_S209.disp',number_path,number_atom)
+gulp.Readata('20_5x8_S209.disp',number_atom)
 gulp.Plot(xmin,xmax,ymin,ymax,linewidth,dpi=300,save=True)
