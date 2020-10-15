@@ -34,7 +34,7 @@ class SED(object):
 		self.sed_mean = np.hstack((self.sed_fre,sed_mean))
 
 		np.savetxt(saveSEDfile,self.sed_array,delimiter = ' ')
-		np.savetxt(saveMEANfile,sed_mean,delimiter = ' ')
+		np.savetxt(saveMEANfile,self.sed_mean,delimiter = ' ')
 
 		return
 
