@@ -1,36 +1,8 @@
-# frequency-energy sum
-import numpy as np
-import matplotlib.pyplot as plt
-np.set_printoptions(suppress=True)
-np.set_printoptions(threshold=100000000)
+# reference code
+# https://blog.csdn.net/askme_/article/details/106795560
+mylist=[(3, 'a'), (7, 'b'), (4, 'a'), (5, 'c'), (2, 'a'), (1, 'b')]
 
-class FrequencyEnergy(object):
-	"""FrequencyEnergy"""
-	def Sort(self,fre_ener):
+mynewlist=[(sum(i[0] for i in group), key) for key, group in itertools.groupby(sorted(mylist, key = lambda i: i[1]), lambda i: i[1])]
 
-		self.fe = np.loadtxt(fre_ener)
-		# sorting by the 1th column
-		self.fe_sort = self.fe[np.argsort(self.fe[:,0])]
-		# merging the same frequency
-		self.f_new = np.unique(self.fe_sort[:,0])
-		
-		return
-
-	def Compare(self,x1,x2,y1,y2):
-		if x1 == x2:
-			y = y1+y2
-		return y
-
-
-	def NewFE(self,):
-		len_all = len(self.fe_sort)
-		len_new = len(self.f_new)
-		print(len_all,len_new)
-		for i in range(len_new):
-			for j in range(len_all):
-				print(i,j)
-		return
-
-Q = FrequencyEnergy()
-Q.Sort('fre_high_energy_0.dat')
-Q.NewFE()
+print(mynewlist)
+[(9, 'a'), (8, 'b'), (5, 'c')]
