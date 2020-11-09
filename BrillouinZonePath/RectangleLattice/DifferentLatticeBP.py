@@ -16,5 +16,7 @@ a2 = 27.010
 
 DifferentLBP(a1,a2)
 
+#write in the last
+#XXXXX,this code is wrong for Two Dimensional Rectangle Brillouin zone Path
 
 

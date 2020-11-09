@@ -136,18 +136,29 @@ class Dispersion(object):
 		plt.close()
 		return
 
-	def FrequencyEnergy(self,savefe):
+	def FrequencyEnergy(self,savefe,Energy_type,norm=True,):
 		"""save the frequency--energy"""
 		fe = np.loadtxt(self.filename2)
-		print(fe.shape)
+		# print(fe.shape)
 		fre = fe[:,4:self.atom_number*3+4]
 		energy = fe[:,self.atom_number*3+4:self.atom_number*6+4]
-		print(fre.shape,energy.shape)
-		frequency = np.mean(fre,axis=0).reshape(self.atom_number*3,1)
-		Energy = np.sum(energy,axis=0).reshape(self.atom_number*3,1)
-		print(frequency.shape,Energy.shape)
+		# print(fre.shape,energy.shape)
+		frequency = np.mean(fre,axis=0).reshape(self.atom_number*3,1)		
+		if Energy_type == 'sum':
+			Energy = np.sum(energy,axis=0).reshape(self.atom_number*3,1)			
+		elif Energy_type == 'mean':
+			Energy = np.mean(energy,axis=0).reshape(self.atom_number*3,1)
+		# print(frequency.shape,Energy.shape)
+		if norm == True:
+			max_energy = np.max(Energy)
+			print('Max Energy Value = ',max_energy)
+			# max_energy = 1.4748501199040764
+			Energy = Energy/max_energy
+		else:
+			Energy = Energy
 		new_fe = np.hstack((frequency,Energy))
 		np.savetxt(savefe,new_fe,fmt='%f %f')
+
 		return
 
 
@@ -155,16 +166,13 @@ class Dispersion(object):
 variable = '209'
 k_point = 50
 # 图片大小,默认为(8,6),dpi=300
-figsize_x = 8
-figsize_y = 16
+figsize_x,figsize_y = [8,16]
 dpi = 300
 # 线宽默认为1.0
 lw = 4
 # 画图范围，默认x:(0,0.5),y:(0,2)
-range_xmin = 0
-range_xmax = 0.5 #0.375 #0.5
-range_ymin = 0
-range_ymax = 16
+range_xmin,range_xmax = [0,0.5]
+range_ymin,range_ymax = [0,2.0]
 # 原始需要分类的dipersion文件
 # disper_before = 'phonon_sorted.dat'
 disper_before_ener = 'phonon_sorted_energy'+variable+'.dat'
@@ -187,8 +195,17 @@ dispersion.plot_curves(disperfig, dpi, lw,
 print('#----------#')
 dispersion.plot_energy(disperEnergyfig)
 print('#----------#')
-# Frequency energy
-savefe = 'fe'+variable+'.dat'
 
-dispersion.FrequencyEnergy(savefe)
+# Frequency energy
+
+# save file
+savefe = 'fee_'+variable+'.dat'
+
+# Energy types, for example, sum of energies, or average of energies
+Energy_type ='sum'
+# Energy_type=='mean'
+
+# normalized by itself
+norm = True
+dispersion.FrequencyEnergy(savefe,Energy_type,norm)
 print('#----------#')

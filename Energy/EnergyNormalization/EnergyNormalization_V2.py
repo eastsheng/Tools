@@ -11,8 +11,10 @@ def EnergyNormalize(file1,file2,savetxt1,savetxt2):
 
 	max_value = np.max(data2[:,3])#按照第二个数据的最大值归一化
 	# print(max_value)
-	# print(data1[:,3])
-
+	print('Total energy of data1:',np.sum(data1[:,3]))
+	print('Total energy of data2:',np.sum(data2[:,3]))
+	print('Average energy of data1:',np.mean(data1[:,3]))
+	print('Average energy of data2:',np.mean(data2[:,3]))
 	Nor_energy1 = (data1[:,3]/max_value).reshape(m,1)
 	Nor_energy2 = (data2[:,3]/max_value).reshape(j,1)
 	# print(Nor_energy1.shape)
@@ -26,10 +28,10 @@ def EnergyNormalize(file1,file2,savetxt1,savetxt2):
 	return print('Done!')
 
 
-d1 = '25highlocalization.dat1'
-d2 = '33highlocalization.dat1'
+data2 = '25highlocalization.dat1'
+data1 = '33highlocalization.dat1'
 
-s1 = '25highlocalization.dat'
-s2 = '33highlocalization.dat'
+save2 = '25highlocalization.dat'
+save1 = '33highlocalization.dat'
 
-EnergyNormalize(d2,d1,s2,s1)
+EnergyNormalize(data1,data2,save1,save2)
