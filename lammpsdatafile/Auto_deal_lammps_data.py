@@ -34,4 +34,4 @@ def DataProcess(filename1,filename2,number_of_atom_type=2):
 
 	return print('DataProcess done!')
 
-DataProcess('data_from_msi2lmp.data','processed.data')
+DataProcess('data_from_msi2lmp.data','Full.data')
