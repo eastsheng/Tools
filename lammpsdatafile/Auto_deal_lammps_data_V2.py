@@ -3,6 +3,8 @@ import numpy as np
 
 class LAMMPSData(object):
 	def ToFull(self,filename1,filename2,type_p):
+		self.filename2=filename2
+		self.skiprow = 0
 		with open(filename1,'r')as data1,open(filename2,'w')as data2:
 			for index, line in enumerate(data1,1):
 				line_ss = line.strip().split()
@@ -29,7 +31,7 @@ class LAMMPSData(object):
 					data2.write(line)
 
 				if line=='Atoms # full\n':
-
+					self.skiprow=index
 					data2.write('\n')
 					data2.write(line)
 					data2.write('\n')
@@ -44,14 +46,21 @@ class LAMMPSData(object):
 									str(line_ss[6])+'\n')
 		return print('DataProcess done!')
 
+	def Position(self,position_data):
+		pos = np.loadtxt(self.filename2,skiprows=15)
+		print(pos)
+		np.savetxt(position_data,pos[:,1:])
+
+		return
 # ------Main Program--------#
 # True = full;False = atoms
 
-type_p=True
-# type_p=False
+# type_p=True
+type_p=False
 
 ADLD = LAMMPSData()
 if type_p==True:
 	ADLD.ToFull('data_from_msi2lmp.data','Full.data',type_p)
 else:
 	ADLD.ToFull('data_from_msi2lmp.data','Atoms.data',type_p)
+ADLD.Position('position.data')

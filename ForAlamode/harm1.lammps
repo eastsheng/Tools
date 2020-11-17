@@ -1,0 +1,7 @@
+import os
+import re
+ls = os.listdir()
+print(ls,type(ls))
+lenls = len(ls)
+for i in range(lenls):
+	os.rename(ls[i],'harm000'+str(i+1)+'.lammps')
