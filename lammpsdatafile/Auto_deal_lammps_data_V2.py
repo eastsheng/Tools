@@ -35,7 +35,7 @@ class LAMMPSData(object):
 					data2.write('\n')
 					data2.write(line)
 					data2.write('\n')
-
+				# if the data is relaxed, the "line_len == 10", else, ==12
 				if line_len == 12:
 
 					if type_p == True: #True = full;False = atoms
@@ -46,21 +46,27 @@ class LAMMPSData(object):
 									str(line_ss[6])+'\n')
 		return print('DataProcess done!')
 
-	def Position(self,position_data):
+	def Position(self,position_data,number_atom=True):
 		pos = np.loadtxt(self.filename2,skiprows=15)
-		print(pos)
-		np.savetxt(position_data,pos[:,1:])
-
+		# print(pos)
+		pos_sort = pos[np.argsort(pos[:,0])]
+		if number_atom ==True:
+			np.savetxt(position_data,pos_sort[:,0:],'%d %d %f %f %f')
+		else:
+			np.savetxt(position_data,pos[:,1:],'%d %f %f %f')
 		return
+
 # ------Main Program--------#
 # True = full;False = atoms
 
 # type_p=True
 type_p=False
+# if need to save number of atoms, it is true
+number_atom=True
 
 ADLD = LAMMPSData()
 if type_p==True:
 	ADLD.ToFull('data_from_msi2lmp.data','Full.data',type_p)
 else:
 	ADLD.ToFull('data_from_msi2lmp.data','Atoms.data',type_p)
-ADLD.Position('position.data')
+ADLD.Position('position.data',number_atom)
