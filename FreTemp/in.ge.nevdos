@@ -1,0 +1,118 @@
+# tensile deformation
+variable k 	 index 1 #2 3 #equal 1
+
+# convert from LAMMPS real units to SI #
+variable    kB       equal 1.3806504e-23    # [J/K] Boltzmann
+variable    eV2J     equal 1.602763e-19     # energy
+variable    A2m      equal 1.0e-10          # distance
+variable    ps2s     equal 1.0e-12          # time
+variable T0 	 equal 300
+#1 general
+units		metal
+dimension	3
+atom_style      atomic
+neighbor        0.3 bin
+
+#2 structure
+boundary	p p p
+read_data	lammps.dat
+mass		1 72.64
+replicate    10 1 1 
+
+#4 potentials
+pair_style      sw
+pair_coeff      * * germanene.sw Ge
+
+velocity  all  create  300 458127641 mom yes  rot yes dist gaussian
+neighbor 2.0 bin
+neigh_modify delay 3
+fix getEqu  all  nvt temp 300 300 .5e-1
+thermo 10000
+timestep .5e-3
+run 100000
+write_data   nvt.dat
+unfix getEqu
+
+#Define group for NEMD before relaxation 
+variable X1 	 equal xlo                 # armchair direct xlow  xhigh
+variable X2 	 equal xhi
+variable Nlay    equal 100                 #xlo--xhi were divided 200 lays
+variable Dscale  equal 1/${Nlay}           
+variable Len     equal ${X2}-${X1}         #length of armchair
+variable Dz      equal ${Len}/${Nlay}      #length of one in 200 lays
+
+variable   B1    equal   ${X1}+2*${Dz}            #fix1   
+variable   B2    equal   ${X1}+4*${Dz}          #bath1 include fix1's length and bath1's length
+variable   B26   equal   ${X2}-4*${Dz}          #bath2 include fix2's length and bath2's length
+variable   B27   equal   ${X2}-2*${Dz}            #fix2
+
+
+# Region definition
+region	reg_all	block	${X1}  ${X2}   INF INF   INF INF     units box
+region	reg_1	block	INF    ${B1}   INF INF   INF INF     units box
+region	reg_2	block	${B1}  ${B2}   INF INF   INF INF     units box
+region	reg_27	block	${B26} ${B27}  INF INF   INF INF     units box
+region	reg_28	block	${B27} INF     INF INF   INF INF     units box
+
+# Group definition                                   
+group	g_all	    region	reg_all                  
+group	g_1		    region	reg_1         #fixed 
+group	g_2		    region	reg_2         #heatbath1    
+group	g_27		region	reg_27        #heatbath2 
+group	g_28		region	reg_28        #fixed 
+group   g_NVE       subtract g_all g_1 g_28
+
+group   g_dos id  152 111 269 274 113 230 62 89 115 88 150 83 60 38 191 51 132 156 200 37 239 97 264 272 236 44 91 189 98 58 303 45
+
+
+reset_timestep 0
+change_box all boundary  f p p 
+
+#compute total temperature
+compute   ke  all ke/atom
+variable temp atom c_ke*${eV2J}/(1.5*${kB})
+
+#velocity fixed zero
+velocity   g_1      set 0  0  0  
+velocity   g_28     set 0  0  0 
+
+# fixed boundary
+fix      1     g_1    setforce  0   0   0
+fix      2     g_28   setforce  0   0   0
+
+# set up langevin heat bath 
+fix	  3	     g_2	langevin 310 310 0.05 $k tally yes
+fix	  4	     g_27	langevin 290 290 0.05 $k tally yes
+fix   5      g_NVE   nve
+
+# Definte variable
+variable Time 	 equal step
+variable EL 	 equal f_3
+variable ER 	 equal f_4
+
+#temperature
+compute 18 all chunk/atom bin/1d x lower ${Dscale} units reduced
+
+reset_timestep 0
+fix 11 all ave/chunk 1 100000 100000 18 v_temp file $k_temp_equ_${T0}K.dat
+fix	E_out	all print 2000 "${Time}  ${EL}  ${ER}" file $k_Ener_equ_${T0}K.dat title "Time  E1  E2" screen no	
+
+reset_timestep    0
+# -------------- Flux calculation in nve ---------------
+#fix nve all nve
+#compute     myKE all ke/atom
+#compute     myPE all pe/atom
+#compute     myStress all stress/atom virial
+#compute      jflux all heat/flux myKE myPE myStress
+#fix ss all ave/correlate 5 20000 100000 vx vy vz type auto file j0jt.txt
+
+dump lala g_dos custom 1 v_ne.txt id type vx vy vz
+
+dump 1 all xyz 100000 $k_nve_${T0}K_*.xyz
+dump_modify 1 sort id
+dump_modify 1 element Ge
+
+run             100000
+
+undump    1
+undump    lala
