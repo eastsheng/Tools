@@ -130,20 +130,19 @@ def DeltaT_calculate():
 
 
 ##*********main program*********##
-size('1_nvt.data')
+size('1_nvt_arm.data')
 # #温度拟合区间(nm)
 # size_layer = system_size_x/number_layers
 # Temp_xmin=(number_layers/6)*size_layer#nm
 # Temp_xmax=system_size_x-Temp_xmin#nm
 
 size_layer = system_size_x/number_layers
-Temp_xmin=(number_fixed+number_bath)*size_layer#nm
+Temp_xmin=5*(number_fixed+number_bath)*size_layer#nm
 Temp_xmax=system_size_x-Temp_xmin#nm
 
 temp_grad("1_temp_equ_300K.dat","1_temp_equ_300K.txt")
 plot_temp("1_temp_equ_300K.txt")
 DeltaT_calculate()
-
 
 
 print('*******************')
