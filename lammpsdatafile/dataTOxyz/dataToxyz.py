@@ -2,12 +2,7 @@
 import numpy as np
 np.set_printoptions(suppress=True)
 # np.set_printoptions(threshold=100000000)
-class ClassName(object):
-	"""docstring for ClassName"""
-	def __init__(self, arg):
-		super(ClassName, self).__init__()
-		self.arg = arg
-		
+	
 #read info from lammpsdata file
 class LammpsData(object):
 	def readAtominfo(self,lammpsdata):
