@@ -28,10 +28,12 @@ def EnergyNormalize(file1,file2,savetxt1,savetxt2):
 	return print('Done!')
 
 
-data2 = '25highlocalization.dat1'
-data1 = '33highlocalization.dat1'
+path = '../l0=5.40/NormalizedEnergy/'
 
-save2 = '25highlocalization.dat'
-save1 = '33highlocalization.dat'
+data2 = path+'highlocalization_energy_tem209.dat1'
+data1 = path+'highlocalization_energy_tem32.dat1'
+
+save2 = path+'highlocalization_energy_tem209.dat'
+save1 = path+'highlocalization_energy_tem32.dat'
 
 EnergyNormalize(data1,data2,save1,save2)
