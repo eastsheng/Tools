@@ -89,7 +89,8 @@ class GroupVelocity(object):
 
  		plt.legend((s1,s2,s3),('$\mathregular{MoS_2}$/$\mathregular{MoSe^{32}}_\mathregular{2}$',
  								'$\mathregular{MoS_2}$/$\mathregular{MoSe^{78}}_\mathregular{2}$',
- 								'$\mathregular{MoS_2}$/$\mathregular{MoSe^{209}}_\mathregular{2}$') ,loc = 'best')
+ 								'$\mathregular{MoS_2}$/$\mathregular{MoSe^{209}}_\mathregular{2}$'),
+ 								loc = 'best',fontsize=16)
 
  		ax.set_xlabel('Frequency (THz)',fontsize=26,fontweight='bold')
  		ax.set_ylabel('Group velocity (km/s)',fontsize=26,fontweight='bold')
