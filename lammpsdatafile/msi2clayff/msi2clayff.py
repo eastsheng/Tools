@@ -20,7 +20,7 @@ def readata(msi_data,clayff_data):
 			if "Bonds" in line:
 				Bonds_index = index
 			if "Angles" in line:
-				Angles_index = index
+				Angles_index = index	
 
 	with open(msi_data,'r') as msi,open(clayff_data,'w') as clay:
 		count = 0
