@@ -60,7 +60,7 @@ class BuildNPs(object):
  		print("Number of atom 1 =",count)
  		print("Number of atom 2 =",self.mm-count)
 
- 	def find_circle_data(self,diameter=7,center_factor=[0.51,0.5,0.5]):
+ 	def find_circle_data(self,diameter=7,center_factor=[0.51,0.5,0.5],error=1):
  		full_data = np.loadtxt(self.lammps_data,skiprows=self.data_full_index,max_rows=self.atom_number)
  		m,n = full_data.shape
  		# find the position of center atom
@@ -71,7 +71,6 @@ class BuildNPs(object):
  		print("Center of cube is",cube_center_position)
  		radius = diameter*0.5
  		nanoNPs_list = []
- 		error = 1e0
  		for i in range(m):
 
  			ra = full_data[i,4]-ca
@@ -121,9 +120,9 @@ class BuildNPs(object):
 
 if __name__ == '__main__':
 	lammps_data = "Si_Crystal_5nm.data"
-	diameter = 20 # Diameter/Angstrom
+	diameter = 13 # Diameter/Angstrom
 	bn = BuildNPs(lammps_data)
 	bn.read_index()
 	# bn.find_cube_data(diameter)
-	bn.find_circle_data(diameter,center_factor = [0.475,0.5,0.5])
+	bn.find_circle_data(diameter,center_factor = [0.475,0.5,0.5],error=0.8)
 	bn.write_data("JanusNPs_"+str(diameter)+"A.data")
